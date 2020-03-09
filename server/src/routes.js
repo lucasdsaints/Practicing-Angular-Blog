@@ -4,7 +4,9 @@ module.exports = (app) => {
   // Search for all posts
   app.get('/posts', async (req, res) => {
     try {
-      const posts = await Post.findAll()
+      const posts = await Post.findAll({
+        order: [['createdAt', 'DESC']]
+      })
       res.send(posts)
     } catch (error) {
       console.log(error)
