@@ -1,0 +1,54 @@
+<div class="row mt-2">
+  <div class="col-12">
+    <form>
+      <div class="form-group">
+        <label for="title">Título da postagem</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          [(ngModel)]="post.title"
+          name="title"
+          placeholder="Ex.: Um Título Muito Bacana"/>
+      </div>
+      <div class="form-group">
+          <label for="author">Autor da postagem</label>
+          <input
+            type="email"
+            class="form-control"
+            id="author"
+            [(ngModel)]="post.author"
+            name="author"
+            placeholder="Ex.: Sr. Fulano de Abobrinha">
+      </div>
+      <div class="form-group">
+        <label for="content">Conteúdo da postagem</label>
+        <textarea
+          class="form-control"
+          id="content"
+          [(ngModel)]="post.content"
+          name="content"
+          rows="10">
+        </textarea>
+      </div>
+
+      <!-- If is a update operation -->
+      <button
+        *ngIf="!isANewPost"
+        type="submit"
+        (click)="update()"
+        class="btn btn-primary">
+        Atualizar
+      </button>
+
+      <!-- If is a create operation -->
+      <button 
+        *ngIf="isANewPost"
+        type="submit"
+        (click)="publish()"
+        class="btn btn-primary">
+        Publicar
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+.post-title {
+  font-size: 2rem;
+  color: #4F65D7;
+  cursor: pointer;
+}
+
+.post-content {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.actions {
+  font-size: 1rem;
+  display: inline;
+}

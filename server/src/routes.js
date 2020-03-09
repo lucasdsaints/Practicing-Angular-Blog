@@ -58,7 +58,7 @@ module.exports = (app) => {
 
   // Update a given post
   app.put('/posts/:postId', async (req, res) => {
-    const { title, author, content } = req.body
+    const { title, author, content, status } = req.body
     const { postId } = req.params
 
     if (!title || !author || !content) {
@@ -69,7 +69,8 @@ module.exports = (app) => {
       const [update] = await Post.update({
         title,
         author,
-        content
+        content,
+        status
       }, {
         where: { id: postId }
       })

@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <span
+    class="navbar-brand"
+    (click)="goHome()">
+    VirtuxBlog
+  </span>
+  <div class="navbar-nav ml-auto">
+    <div class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" >
+        {{ perspective }}
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+        <a 
+          class="dropdown-item"
+          (click)="changePerspective()"
+          *ngIf="perspective !== 'visitante'">
+          visitante
+        </a>
+        <a
+          class="dropdown-item"
+          (click)="changePerspective()"
+          *ngIf="perspective !== 'administrador'">
+          administrador
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

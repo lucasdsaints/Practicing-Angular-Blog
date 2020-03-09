@@ -5,16 +5,24 @@ import { FormsModule } from '@angular/forms'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { PostsListComponent } from './posts-list/posts-list.component';
-import { PostComponent } from './post/post.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
+import { HomeVisitorComponent } from './pages/home-visitor/home-visitor.component';
+import { PostViewComponent } from './pages/post-view/post-view.component';
+import { PostEditComponent } from './pages/post-edit/post-edit.component';
+import { PostCardComponent } from './components/post-card/post-card.component';
+import { PostsInfoComponent } from './components/posts-info/posts-info.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
-    PostsListComponent,
-    PostComponent
+    HomeAdminComponent,
+    HomeVisitorComponent,
+    PostViewComponent,
+    PostEditComponent,
+    PostCardComponent,
+    PostsInfoComponent
   ],
   imports: [
     BrowserModule,

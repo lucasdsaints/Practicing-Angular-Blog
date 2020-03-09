@@ -1,0 +1,24 @@
+<div class="row mt-2">
+  <div class="col-12 col-lg-2">
+    <app-posts-info
+      [numPosts]="posts ? posts.length : 0"
+      [numInactivePosts]="posts ? numInactivePosts() : 0">
+    </app-posts-info>
+  </div>
+  <div class="col-12 col-lg-10" *ngIf="posts">
+    <app-post-card 
+      *ngFor="let post of posts"
+      [post]="post">
+
+      <a routerLink="/post-edit/{{ post.id }}">editar</a> |
+      <a (click)="toggleStatus(post)" *ngIf="post.status">
+        desativar
+      </a>
+      <a (click)="toggleStatus(post)" *ngIf="!post.status">
+        ativar
+      </a>
+      
+
+    </app-post-card>
+  </div>
+</div>

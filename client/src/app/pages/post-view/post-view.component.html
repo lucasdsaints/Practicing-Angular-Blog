@@ -1,0 +1,13 @@
+<div class="row mt-2" *ngIf="post">
+  <div class="col-12">
+    <div class="border-bottom post-title">
+      {{ post.title }}
+    </div>
+    <div class="border-botton text-secondary post-info">
+      {{ post.author }} - {{ post.createdAt | date: 'dd/MM/yyyy - HH:mm' }}
+    </div>
+    <div class="border-botton mt-4 text-justify post-content">
+      {{ post.content }}
+    </div>
+  </div>
+</div>
