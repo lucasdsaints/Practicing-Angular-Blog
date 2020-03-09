@@ -3,6 +3,7 @@ import { PostModel } from 'src/app/utils/post.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostsService } from 'src/app/utils/posts.service';
 import { Title } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-post-edit',
@@ -18,7 +19,8 @@ export class PostEditComponent implements OnInit {
     private route: ActivatedRoute,
     private postsService: PostsService,
     private titleService: Title,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -40,20 +42,20 @@ export class PostEditComponent implements OnInit {
     try {
       this.postsService.createPost(this.post)
         .subscribe(post => {
-          console.log('Post criado!!!!');
+          this.toastr.success('Post publicado com sucesso!');
           this.router.navigateByUrl(`/post-view/${post.id}`);
         })
     } catch (error) {
+      this.toastr.error('Erro ao tentar publicar post!');
       console.log(error);
     }
   }
 
   update() {
     try {
-      // console.log(this.post.id)
       this.postsService.updatePost(this.post.id, this.post)
-        .subscribe(post => {
-          console.log('Post atualizado!!!!');
+        .subscribe(() => {
+          this.toastr.success('Post atualizado com sucesso!');
           this.router.navigateByUrl(`/post-view/${this.post.id}`);
         })
     } catch (error) {

@@ -32,8 +32,8 @@ export class NavBarComponent implements OnInit {
     this.perspectiveChangeSub.unsubscribe();
   }
 
-  changePerspective() {
-    this.perspectiveService.changePerspective();
+  changePerspective(newPerspective: string) {
+    this.perspectiveService.changePerspective(newPerspective);
   }
 
   goHome() {

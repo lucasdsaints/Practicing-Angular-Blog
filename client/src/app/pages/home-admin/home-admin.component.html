@@ -5,7 +5,7 @@
       [numInactivePosts]="posts ? numInactivePosts() : 0">
     </app-posts-info>
   </div>
-  <div class="col-12 col-lg-10" *ngIf="posts">
+  <div class="col-12 col-lg-10" *ngIf="!isEmpty">
     <app-post-card 
       *ngFor="let post of posts"
       [post]="post">
@@ -17,7 +17,10 @@
       <a (click)="toggleStatus(post)" *ngIf="!post.status">
         ativar
       </a>
-      
+
+      <div class="col-12 no-posts" *ngIf="isEmpty">
+        <h1>Sem postagens por hora :(</h1>
+      </div>
 
     </app-post-card>
   </div>

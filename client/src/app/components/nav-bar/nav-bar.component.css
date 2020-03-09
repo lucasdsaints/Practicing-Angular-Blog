@@ -2,3 +2,9 @@
   font-family: 'Rock Salt', cursive;
   cursor: pointer;
 }
+
+.navbar {
+  /* background-color: #264468; */
+  background-color: #5C659C;
+  color: #fff;
+}

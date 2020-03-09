@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PostsService } from 'src/app/utils/posts.service';
 import { PostModel } from 'src/app/utils/post.model';
 import { Title } from '@angular/platform-browser';
+import { PerspectiveService } from 'src/app/utils/perspective.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home-admin',
@@ -11,21 +13,28 @@ import { Title } from '@angular/platform-browser';
 export class HomeAdminComponent implements OnInit {
 
   posts: PostModel[];
+  isEmpty: boolean = false;
 
   constructor(
     private postsService: PostsService,
-    private titleService: Title
+    private perspectiveService: PerspectiveService,
+    private titleService: Title,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
     this.getPosts();
     this.titleService.setTitle('Virtux Blog - Administrador');
+    this.perspectiveService.changePerspective('administrador');
   }
 
   getPosts() {
     this.postsService.getPosts()
       .subscribe((posts: PostModel[]) => {
         this.posts = posts;
+        if (this.posts.length === 0) {
+          this.isEmpty = true;
+        }
       })
   }
 
@@ -38,11 +47,12 @@ export class HomeAdminComponent implements OnInit {
     post.status = !post.status;
     try {
       this.postsService.updatePost(post.id, post)
-        .subscribe(res => {
-          console.log(res);
+        .subscribe(() => {
+          this.toastr.success('Post atualizado com sucesso!');
           this.numInactivePosts();
         })
     } catch (error) {
+      this.toastr.error('Erro ao atualizar o post!');
       console.log(error);
     }
   }

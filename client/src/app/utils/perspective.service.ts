@@ -12,15 +12,16 @@ export class PerspectiveService {
 
   constructor(private router: Router) { }
 
-  changePerspective() {
-    if (this.currentPerspective === 'visitante') {
-      this.currentPerspective = 'administrador';
-      this.router.navigateByUrl('/home-admin');
-    } else {
-      this.currentPerspective = 'visitante';
-      this.router.navigateByUrl('/home-visitor');
+  changePerspective(newPerspective: string) {
+    if (this.currentPerspective !== newPerspective) {
+      this.currentPerspective = newPerspective;
+      if (newPerspective === 'administrador') {
+        this.router.navigateByUrl('/home-admin');
+      } else {
+        this.router.navigateByUrl('/home-visitor');
+      }
+      this.changedPerspective.next(this.currentPerspective);
     }
-    this.changedPerspective.next(this.currentPerspective);
   }
 
   getCurrentPerspective() {
