@@ -3,6 +3,7 @@ import { PostModel } from 'src/app/utils/post.model';
 import { ActivatedRoute } from '@angular/router';
 import { PostsService } from 'src/app/utils/posts.service';
 import { Title } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-post-view',
@@ -16,7 +17,8 @@ export class PostViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private postsService: PostsService,
-    private titleService: Title
+    private titleService: Title,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -26,7 +28,10 @@ export class PostViewComponent implements OnInit {
         .subscribe((post: PostModel) => {
           this.post = post;
           this.titleService.setTitle(`${this.post.title}`)
-        })
+        }, (error) => {
+          console.log(error);
+          this.toastr.error('Erro ao tentar buscar o post!');
+        });
     });
   }
 

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PostsService } from 'src/app/utils/posts.service';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { PerspectiveService } from 'src/app/utils/perspective.service';
 
 @Component({
   selector: 'app-post-edit',
@@ -20,10 +21,14 @@ export class PostEditComponent implements OnInit {
     private postsService: PostsService,
     private titleService: Title,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private perspectiveService: PerspectiveService
   ) { }
 
   ngOnInit() {
+    if(this.perspectiveService.getCurrentPerspective() !== 'administrador') {
+      this.router.navigateByUrl('/home-visitor');
+    }
     this.route.params.subscribe(params => {
       this.post = new PostModel();
       const postId = params.postId
@@ -32,35 +37,53 @@ export class PostEditComponent implements OnInit {
         this.postsService.getPost(postId)
           .subscribe((post: PostModel) => {
             this.post = post;
-            this.titleService.setTitle(`Edit - ${post.title}`);
+            this.titleService.setTitle(`Editar - ${post.title}`);
+          }, (error) => {
+            console.log(error);
+            this.toastr.error('Erro ao tentar buscar o post!');
           });
+      } else {
+        this.titleService.setTitle('Cadastro de Novo Post');
       }
     });
   }
 
   publish() {
-    try {
-      this.postsService.createPost(this.post)
-        .subscribe(post => {
-          this.toastr.success('Post publicado com sucesso!');
-          this.router.navigateByUrl(`/post-view/${post.id}`);
-        })
-    } catch (error) {
-      this.toastr.error('Erro ao tentar publicar post!');
-      console.log(error);
+    if(!this.allFilled()) {
+      this.toastr.warning('Todos os campos devem ser preenchidos!', '',{
+        timeOut: 4000
+      });
+      return;
     }
+    this.postsService.createPost(this.post)
+      .subscribe(post => {
+        this.toastr.success('Post publicado com sucesso!');
+        this.router.navigateByUrl(`/post-view/${post.id}`);
+      }, (error) => {
+        console.log(error)
+        this.toastr.error('Erro ao tentar publicar post!');
+      });
   }
 
   update() {
-    try {
-      this.postsService.updatePost(this.post.id, this.post)
-        .subscribe(() => {
-          this.toastr.success('Post atualizado com sucesso!');
-          this.router.navigateByUrl(`/post-view/${this.post.id}`);
-        })
-    } catch (error) {
-      console.log(error);
+    if(!this.allFilled()) {
+      this.toastr.warning('Todos os campos devem ser preenchidos!', '',{
+        timeOut: 4000
+      });
+      return;
     }
+    this.postsService.updatePost(this.post.id, this.post)
+      .subscribe(() => {
+        this.toastr.success('Post atualizado com sucesso!');
+        this.router.navigateByUrl(`/post-view/${this.post.id}`);
+      }, (error) => {
+        console.log(error)
+        this.toastr.error('Erro ao tentar atualizar o post!');
+      });
+  }
+
+  allFilled(): boolean {
+    return !!this.post.title && !!this.post.author && !!this.post.content;
   }
 
 }

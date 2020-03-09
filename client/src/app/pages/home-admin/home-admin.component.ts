@@ -35,26 +35,38 @@ export class HomeAdminComponent implements OnInit {
         if (this.posts.length === 0) {
           this.isEmpty = true;
         }
-      })
+      }, (error) => {
+        console.log(error);
+        this.toastr.error('Erro ao tentar buscar os posts!');
+      });
   }
 
   numInactivePosts() {
-    const inactivePosts = this.posts.filter(p => p.status === false)
+    const inactivePosts = this.posts.filter(p => p.status === false);
     return inactivePosts.length;
   }
 
   toggleStatus(post: PostModel) {
     post.status = !post.status;
-    try {
-      this.postsService.updatePost(post.id, post)
-        .subscribe(() => {
-          this.toastr.success('Post atualizado com sucesso!');
-          this.numInactivePosts();
-        })
-    } catch (error) {
-      this.toastr.error('Erro ao atualizar o post!');
-      console.log(error);
-    }
+    this.postsService.updatePost(post.id, post)
+      .subscribe(() => {
+        this.toastr.success('Post atualizado com sucesso!');
+        this.numInactivePosts();
+      }, (error) => {
+        this.toastr.error('Erro ao atualizar o post!');
+        console.log(error);
+      });
+  }
+
+  deletePost(postId: number) {
+    this.postsService.deletePost(postId)
+      .subscribe(() => {
+        this.toastr.success('Post deletado com sucesso!');
+        window.location.reload();
+      }, (error) => {
+        this.toastr.error('Erro ao tentar deletar o post!');
+        console.log(error);
+      });
   }
 
 }

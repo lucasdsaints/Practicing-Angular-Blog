@@ -8,3 +8,9 @@
   background-color: #4671BE;
   border-color: #4671BE;
 }
+
+
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: #4671BE;
+}

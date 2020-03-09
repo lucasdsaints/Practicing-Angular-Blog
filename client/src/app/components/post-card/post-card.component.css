@@ -11,6 +11,18 @@
 }
 
 .actions {
+  text-decoration: none;
+  color: #4F65D7;
   font-size: 1rem;
   display: inline;
+}
+
+.inactive {
+  background-color: #d1d1d1;
+}
+
+.inactive .post-title,
+.inactive .post-content,
+.inactive .post-author {
+  color: #898989;
 }
